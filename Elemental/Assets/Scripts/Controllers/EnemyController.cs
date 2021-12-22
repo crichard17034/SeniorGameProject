@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,12 +11,15 @@ public class EnemyController : MonoBehaviour
     public int maxHealth;
     public int xp;
     public string element;
+    public string elementWeakness;
+    public string elementResistence;
     NavMeshAgent agent;
     Transform target;
     Vector3 velocity;
     public float lookRadius = 10f;
     public float attackRange = 7f;
     public float attackTimer = 120f;
+    public GameObject enemyHealthBar; 
     Collider slimeHitbox;
 
 
@@ -108,14 +112,32 @@ public class EnemyController : MonoBehaviour
         gameObject.GetComponent<DamagePlayer>().setElementDamage(element);
     }
 
-    public void loseHealth(int damageValue)
+    public void loseHealth(string atkElement, int damageValue)
     {
-        currentHealth -= damageValue;
-        if (currentHealth <= 0)
+        if(atkElement == elementWeakness && element != "None")
         {
-            currentHealth = 0;
+            currentHealth -= (damageValue * 2);
+        }
+        else if(atkElement == elementResistence && element != "None")
+        {
+            currentHealth -= (damageValue /2);
+        }
+        else
+        {
+            currentHealth -= damageValue;
+        }
+
+        setHealthBar(currentHealth);
+
+        if(currentHealth <= 0)
+        {
             die();
         }
+    }
+
+    public void setHealthBar(int newCurrentHealth)
+    {
+        enemyHealthBar.GetComponent<Slider>().value = newCurrentHealth;
     }
 
     public void die()

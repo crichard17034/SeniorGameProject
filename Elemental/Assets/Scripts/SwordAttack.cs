@@ -46,7 +46,7 @@ public class SwordAttack : MonoBehaviour
         if (other.tag == "Enemy")
         if(other.tag == "Enemy" && attacking == true)
         {
-            other.gameObject.GetComponent<EnemyController>().loseHealth(damageValue);
+            other.gameObject.GetComponent<EnemyController>().loseHealth(currentElement, damageValue);
         }
     }
 

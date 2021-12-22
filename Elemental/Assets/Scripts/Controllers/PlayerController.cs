@@ -8,9 +8,10 @@ public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
     private float speed = 12; 
-    private float sprintSpeed = 20; 
+    private float sprintSpeed = 30; 
     private float gravity = -29.43f; 
-    private float jumpHeight = 4f; 
+    private float jumpHeight = 5f; 
+    private float invincibility = 0f; 
     private int currentHealth;
     private int maxHealth;
     private int attackStrength;
@@ -34,6 +35,9 @@ public class PlayerController : MonoBehaviour
     public bool isSprinting = false; 
     public GameObject staminaBar; 
     public GameObject healthBar;
+    public GameObject levelText;
+    public GameObject expText;
+    public GameObject atkText;
     public GameObject sword;
     public float sprintCooldown; 
     [SerializeField] Footsteps soundGenerator;
@@ -55,6 +59,7 @@ public class PlayerController : MonoBehaviour
         checkForJump();
         checkForSwap();
         checkForStaminaDrain();
+        checkInvincibility();
     }
 
     public void checkForMovement()
@@ -243,25 +248,28 @@ public class PlayerController : MonoBehaviour
 
     public void loseHealth(int damageValue, string element)
     {
-        if(element == elementWeakness && currentElement != "None")
+        if(invincibility <= 0f)
         {
-            currentHealth -= (damageValue * 2);
-        }
-        else if(element == elementResistence && currentElement != "None")
-        {
-            currentHealth -= (damageValue /2);
-        }
-        else
-        {
-            currentHealth -= damageValue;
-        }
+            if(element == elementWeakness && currentElement != "None")
+            {
+                currentHealth -= (damageValue * 2);
+            }
+            else if(element == elementResistence && currentElement != "None")
+            {
+                currentHealth -= (damageValue /2);
+            }
+            else
+            {
+                currentHealth -= damageValue;
+            }
         
-        if(currentHealth < 0)
-        {
-            currentHealth = 0;
+            if(currentHealth < 0)
+            {
+                currentHealth = 0;
+            } 
+            healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
+            invincibility += 120f;
         }
-
-        healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
     }
 
     public void gainHealth(int healthValue)
@@ -276,8 +284,13 @@ public class PlayerController : MonoBehaviour
 
     public void gainXP(int xpValue)
     {
-        xp += xpValue;
-        checkLevelUp();
+        if(level != 20)
+        {
+            xp += xpValue;
+            expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+            checkLevelUp();
+        }
+        
     }
 
     private void checkLevelUp()
@@ -293,13 +306,18 @@ public class PlayerController : MonoBehaviour
     private void levelUp()
     {
         level += 1;
-        attackStrength += 5;
+        attackStrength += 10;
         maxHealth += 10;
         currentHealth = maxHealth;
-        xpGoal += 100;
+        xpGoal += 250;
 
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
         healthBar.GetComponent<PlayerHealthManager>().levelUpHealth(maxHealth);
+        expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+        levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
+        atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
+
+        checkLevelUp();
     }
 
     //gets the values of each stat from the database and applies them to the corresponding player stats.
@@ -314,6 +332,9 @@ public class PlayerController : MonoBehaviour
         xpGoal = savedGoalXP;
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
         healthBar.GetComponent<PlayerHealthManager>().newSceneHealth(maxHealth, currentHealth);
+        expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+        levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
+        atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
     }
 
     public void sendStats()
@@ -374,6 +395,14 @@ public class PlayerController : MonoBehaviour
             {
                 gainXP(500);
             }
+        }
+    }
+
+    private void checkInvincibility()
+    {
+        if(invincibility > 0f)
+        {
+            invincibility --;
         }
     }
 
