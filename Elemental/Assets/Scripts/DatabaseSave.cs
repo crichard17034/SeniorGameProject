@@ -11,7 +11,6 @@ public class DatabaseSave : MonoBehaviour
     void Start()
     {
         createDB();
-        updateStats(100, 100, 15, 1, 0, 100);
     }
 
     void Awake()

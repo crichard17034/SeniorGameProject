@@ -266,6 +266,7 @@ public class PlayerController : MonoBehaviour
             if(currentHealth < 0)
             {
                 currentHealth = 0;
+                FindObjectOfType<GameManager>().gameOver();
             } 
             healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
             invincibility += 120f;

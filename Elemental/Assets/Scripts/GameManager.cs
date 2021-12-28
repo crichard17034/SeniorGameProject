@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     {
         searchForDatabase();
         searchForPlayer();
-        sendStatsToPlayer(player);
     }
 
     void Awake()
@@ -24,15 +23,12 @@ public class GameManager : MonoBehaviour
         sceneName = currentScene.name;
         searchForDatabase();
         searchForPlayer();
-        sendStatsToPlayer(player);
     }
 
     void OnSceneLoaded()
     {
         checkForOneManager();
-        
         searchForPlayer();
-        sendStatsToPlayer(player);
     }
 
     private void checkForOneManager()
@@ -59,12 +55,19 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void gameOver()
+    {
+        SceneManager.LoadScene(0);
+        unlockMouse();
+    }
+
     //checks if a game object with the tag "Player" is present and sets the value of the player variable
     public void searchForPlayer()
     {
         if(sceneName != "Title Screen")
         {
             player = GameObject.FindWithTag("Player");
+            sendStatsToPlayer(player);
         }
     }
 

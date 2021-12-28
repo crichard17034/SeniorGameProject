@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Title Screen.unity
     guid: 261057b00bcaec44c82884e42c1aae23
   - enabled: 1
-    path: Assets/Scenes/Vale(HUB).unity
-    guid: fdb0add6da2cc7242b219f84c61ecf48
-  - enabled: 1
     path: Assets/Scenes/Wind Territory.unity
     guid: 9eb0a009cddcc2d4abbc4a94115ebfa9
+  - enabled: 1
+    path: Assets/Scenes/Dark Territory.unity
+    guid: 40fe249eab535a644a10fa87c924e2ee
   m_configObjects: {}
