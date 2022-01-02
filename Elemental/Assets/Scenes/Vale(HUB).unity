@@ -142,7 +142,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 64698473}
-  - component: {fileID: 64698474}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Game Manager
@@ -164,20 +163,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &64698474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64698472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fc13047675ef634e8e59e7b7747f0d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  databaseSave: {fileID: 0}
-  player: {fileID: 0}
 --- !u!4 &67078203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7290032068064523871, guid: 05af2330f098c83468e5570bde466784,
@@ -337,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 84726734}
-  xp: 0
+  currentElement: 
   groundCheck: {fileID: 735650421}
   headCheck: {fileID: 1846871993}
   groundDistance: 5
@@ -348,6 +333,9 @@ MonoBehaviour:
   isSprinting: 0
   staminaBar: {fileID: 1272653692}
   healthBar: {fileID: 1379295665}
+  levelText: {fileID: 0}
+  expText: {fileID: 0}
+  atkText: {fileID: 0}
   sword: {fileID: 1591614389}
   sprintCooldown: 0
   soundGenerator: {fileID: 84726731}
@@ -1173,7 +1161,6 @@ GameObject:
   m_Component:
   - component: {fileID: 292289769}
   - component: {fileID: 292289768}
-  - component: {fileID: 292289767}
   m_Layer: 0
   m_Name: DataSave
   m_TagString: Database
@@ -1181,18 +1168,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &292289767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292289766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c31e336ea010820408916241b3bec26e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &292289768
 MonoBehaviour:
   m_ObjectHideFlags: 0

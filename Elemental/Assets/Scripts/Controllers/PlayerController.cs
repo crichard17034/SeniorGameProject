@@ -180,45 +180,15 @@ public class PlayerController : MonoBehaviour
                 elementResistence = "None";
             }
         }
-        else if(Input.GetButtonDown("WindSwitch") && windStone == true)
-        {
-            if(currentElement != "Wind" && staminaBar.GetComponent<Slider>().value > 0)
-            {
-                currentElement = "Wind";
-                elementWeakness = "Fire";
-                elementResistence = "Water";
-            }
-            else
-            {
-                currentElement = "None";
-                elementWeakness = "None";
-                elementResistence = "None";
-            }
-        }
-        else if(Input.GetButtonDown("LightSwitch") && lightStone == true)
-        {
-            if(currentElement != "Light" && staminaBar.GetComponent<Slider>().value > 0)
-            {
-                currentElement = "Light";
-                elementWeakness = "Dark";
-                elementResistence = "Light";
-            }
-            else
-            {
-                currentElement = "None";
-                elementWeakness = "None";
-                elementResistence = "None";
-            }
-        }
         else 
         {
-            if(Input.GetButtonDown("DarkSwitch") && darkStone == true)
+            if(Input.GetButtonDown("WindSwitch") && windStone == true)
             {
-                if(currentElement != "Dark" && staminaBar.GetComponent<Slider>().value > 0)
+                if(currentElement != "Wind" && staminaBar.GetComponent<Slider>().value > 0)
                 {
-                    currentElement = "Dark";
-                    elementWeakness = "Light";
-                    elementResistence = "Dark";
+                    currentElement = "Wind";
+                    elementWeakness = "Fire";
+                    elementResistence = "Water";
                 }
                 else
                 {
@@ -378,19 +348,6 @@ public class PlayerController : MonoBehaviour
             {
                 windStone = true;            
                 Debug.Log("The wind element has been added.");
-            }
-            else
-            {
-                gainXP(500);
-            }
-        }
-        else
-        {
-            if(lightStone == false && darkStone == false)
-            {
-                lightStone = true;
-                darkStone = true;            
-                Debug.Log("The light and dark elements have been added.");
             }
             else
             {
