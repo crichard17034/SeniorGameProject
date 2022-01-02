@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Wind Territory.unity
     guid: 9eb0a009cddcc2d4abbc4a94115ebfa9
   - enabled: 1
-    path: Assets/Scenes/Game Over Screen.unity
-    guid: a88b3676697ee5d4e86005f767fcab34
+    path: Assets/Scenes/Dark Territory.unity
+    guid: 40fe249eab535a644a10fa87c924e2ee
   m_configObjects: {}
