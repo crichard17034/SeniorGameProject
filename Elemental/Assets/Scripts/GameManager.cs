@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
 
     public void newGame()
     {
-        databaseSave.GetComponent<DatabaseSave>().newGame(100, 100, 15, 1, 0, 100);
         SceneManager.LoadScene(1);
+        databaseSave.GetComponent<DatabaseSave>().newGameStart(100, 100, 15, 1, 0, 100);
     }
     
     public void continueGame()

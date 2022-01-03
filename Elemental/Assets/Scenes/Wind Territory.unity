@@ -1628,6 +1628,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 102512959344249093, guid: 3f61f6585d1967c4b9afbb10312ce664,
+        type: 3}
+      propertyPath: gemName
+      value: fire
+      objectReference: {fileID: 0}
     - target: {fileID: 4878889058162339663, guid: 3f61f6585d1967c4b9afbb10312ce664,
         type: 3}
       propertyPath: m_Name
@@ -7671,6 +7676,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 102512959344249093, guid: 3f61f6585d1967c4b9afbb10312ce664,
+        type: 3}
+      propertyPath: gemName
+      value: water
+      objectReference: {fileID: 0}
     - target: {fileID: 4878889058162339663, guid: 3f61f6585d1967c4b9afbb10312ce664,
         type: 3}
       propertyPath: m_Name

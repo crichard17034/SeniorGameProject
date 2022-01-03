@@ -10,12 +10,12 @@ public class DatabaseSave : MonoBehaviour
 
     void Start()
     {
-        createDB();
+       createDB();
     }
 
     void Awake()
-    {
-        viewStats();
+    { 
+        
     }
 
     //creates a table to store player stats if no table containing the data can be located
@@ -39,7 +39,7 @@ public class DatabaseSave : MonoBehaviour
 
     //When starting a new game, any current entries in the player table are removed and the starting stats are inserted in their place
 
-    public void newGame(int maxHealth, int currentHealth, int attackStrength, int level, int xp, int xpGoal)
+    public void newGameStart(int maxHealth, int currentHealth, int attackStrength, int level, int xp, int xpGoal)
     {
         using(var connection = new SqliteConnection(dbName))
         {
@@ -48,7 +48,7 @@ public class DatabaseSave : MonoBehaviour
             using(var command = connection.CreateCommand())
             {
                 command.CommandText = "DELETE FROM player; INSERT INTO player (maxHealth, currentHealth, " +
-                    "attackStrength, level, xp, xpGoal) VALUES'"+ maxHealth +"', '"+ currentHealth +"', '"+ attackStrength +"', '"+ level +"', '"+ xp +"', '"+ xpGoal+"';";
+                    "attackStrength, level, xp, xpGoal) VALUES('"+ maxHealth +"', '"+ currentHealth +"', '"+ 15 +"', '"+ 1 +"', '"+ 0 +"', '"+ 100+"');";
                 command.ExecuteNonQuery();
             }
             
