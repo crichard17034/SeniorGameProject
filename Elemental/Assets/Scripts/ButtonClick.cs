@@ -9,4 +9,9 @@ public class ButtonClick : MonoBehaviour
     {
         FindObjectOfType<GameManager>().newGame();
     }
+
+    public void continueGame()
+    {
+        FindObjectOfType<GameManager>().continueGame();
+    }
 }
