@@ -14,4 +14,14 @@ public class ButtonClick : MonoBehaviour
     {
         FindObjectOfType<GameManager>().continueGame();
     }
+
+    public void quitGame()
+    {
+        FindObjectOfType<GameManager>().quitGame();
+    }
+
+    public void titleScreen()
+    {
+        FindObjectOfType<GameManager>().titleScreen();
+    }
 }
