@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class SwordAttack : MonoBehaviour
 {
-    public GameObject player;
+    GameObject player;
     Animator anim;
     Collider swordHitbox;
+    public GameObject blade;
     private int damageValue;
     private string currentElement;
     bool attacking;
+    public Material windColor;
+    public Material fireColor;
+    public Material waterColor;
+    public Material baseColor;
 
     private void Start()
     {
@@ -43,7 +48,6 @@ public class SwordAttack : MonoBehaviour
     //checks if the game object that collided with the sword is an enemy
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
         if(other.tag == "Enemy" && attacking == true)
         {
             other.gameObject.GetComponent<EnemyController>().loseHealth(currentElement, damageValue);
@@ -55,8 +59,26 @@ public class SwordAttack : MonoBehaviour
         damageValue = newAtkStr;
     }
 
+    //changes the element property of the blade and the color
     public void changeElement(string newElement)
     {
         currentElement = newElement;
+        
+        if(newElement == "Wind")
+        {
+            blade.GetComponent<MeshRenderer>().material = windColor;
+        }
+        else if(newElement == "Fire")
+        {
+            blade.GetComponent<MeshRenderer>().material = fireColor;
+        }
+        else if(newElement == "Water")
+        {
+            blade.GetComponent<MeshRenderer>().material = waterColor;
+        }
+        else
+        {
+            blade.GetComponent<MeshRenderer>().material = baseColor;
+        }
     }
 }

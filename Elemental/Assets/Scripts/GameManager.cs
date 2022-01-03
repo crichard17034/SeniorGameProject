@@ -57,14 +57,31 @@ public class GameManager : MonoBehaviour
 
     public void gameOver()
     {
+        SceneManager.LoadScene(3);
+        unlockMouse();
+    }
+    
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+
+    public void titleScreen()
+    {
         SceneManager.LoadScene(0);
+        unlockMouse();
+    }
+
+    public void winGame()
+    {
+        SceneManager.LoadScene(2);
         unlockMouse();
     }
 
     //checks if a game object with the tag "Player" is present and sets the value of the player variable
     public void searchForPlayer()
     {
-        if(sceneName != "Title Screen")
+        if(sceneName == "Wind Territory")
         {
             player = GameObject.FindWithTag("Player");
             sendStatsToPlayer(player);
@@ -96,13 +113,6 @@ public class GameManager : MonoBehaviour
     {
         player.GetComponent<PlayerController>().sendStats();
     }
-
-    // takes in a string containing the name of a scene and loads it through SceneManager
-    public void Teleport(string location)
-    {
-        getPlayerStats();
-        SceneManager.LoadScene(location);
-    }    
     
     //allows the cursor to freely move on screen when on menus
     public void unlockMouse()

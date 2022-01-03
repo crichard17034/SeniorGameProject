@@ -11,6 +11,7 @@ TagManager:
   - PlayerWeapon
   - Database
   - Game Manager
+  - Barrier
   layers:
   - Default
   - TransparentFX
