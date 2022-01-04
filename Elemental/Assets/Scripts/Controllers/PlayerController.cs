@@ -180,16 +180,13 @@ public class PlayerController : MonoBehaviour
                 elementResistence = "None";
             }
         }
-        else 
+        else if(Input.GetButtonDown("WindSwitch") && windStone == true)
         {
-            if(Input.GetButtonDown("WindSwitch") && windStone == true)
+            if(currentElement != "Wind" && staminaBar.GetComponent<Slider>().value > 0)
             {
-                if(currentElement != "Wind" && staminaBar.GetComponent<Slider>().value > 0)
-                {
-                    currentElement = "Wind";
-                    elementWeakness = "Fire";
-                    elementResistence = "Water";
-                }
+                currentElement = "Wind";
+                elementWeakness = "Fire";
+                elementResistence = "Water";
             }
             else
             {
@@ -364,6 +361,11 @@ public class PlayerController : MonoBehaviour
         {
             invincibility --;
         }
+    }
+
+    public string getElement()
+    {
+        return currentElement;
     }
 
     public void PlayFootstep()

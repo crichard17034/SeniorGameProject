@@ -9,7 +9,7 @@ public class SwordAttack : MonoBehaviour
     Collider swordHitbox;
     public GameObject blade;
     private int damageValue;
-    private string currentElement;
+    public string currentElement;
     bool attacking;
     public Material windColor;
     public Material fireColor;
@@ -46,7 +46,7 @@ public class SwordAttack : MonoBehaviour
     }
 
     //checks if the game object that collided with the sword is an enemy
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Enemy" && attacking == true)
         {

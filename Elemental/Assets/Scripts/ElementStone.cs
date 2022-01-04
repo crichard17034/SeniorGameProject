@@ -6,9 +6,14 @@ public class ElementStone : MonoBehaviour
 {
     public string gemName;
 
-    void OnTriggerEnter(Collider other)
+    //checks if the object colliding with the hitbox is a player object and deletes the gem while adding it to the player
+    private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<PlayerController>().collectGem(gemName);
-        Destroy(gameObject);
+        if(other.tag == "Player")
+        {
+            other.gameObject.GetComponent<PlayerController>().collectGem(gemName);
+            Destroy(gameObject);
+        }
+        
     }
 }
