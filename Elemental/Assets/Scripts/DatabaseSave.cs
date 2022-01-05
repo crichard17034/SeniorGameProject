@@ -14,7 +14,6 @@ public class DatabaseSave : MonoBehaviour
     }
     
     //creates a table to store player stats if no table containing the data can be located
-
     public void createDB()
     {
         using (var connection = new SqliteConnection(dbName))
@@ -33,7 +32,6 @@ public class DatabaseSave : MonoBehaviour
     }
 
     //When starting a new game, any current entries in the player table are removed and the starting stats are inserted in their place
-
     public void newGameStart(int maxHealth, int currentHealth, int attackStrength, int level, int xp, int xpGoal)
     {
         using(var connection = new SqliteConnection(dbName))
@@ -52,7 +50,6 @@ public class DatabaseSave : MonoBehaviour
     }
 
     //takes in the current stats of the player and updates the values within the table
-
     public void updateStats(int maxHP, int currentHP, int attackSTR, int lv, int exp, int expGoal)
     {
         using(var connection = new SqliteConnection(dbName))
@@ -71,7 +68,6 @@ public class DatabaseSave : MonoBehaviour
     }
 
     //opens a connection and IDataReader for the player table and reads off each value to the player's controller to update stats.
-
     public void sendToPlayer(GameObject playerObject)
     {
         using(var connection = new SqliteConnection(dbName))
@@ -97,7 +93,6 @@ public class DatabaseSave : MonoBehaviour
     }
 
     //reads off the values of player stats in a debug log. Mainly used for testing purposes
-
     public void viewStats()
     {
         using(var connection = new SqliteConnection(dbName))
@@ -115,13 +110,11 @@ public class DatabaseSave : MonoBehaviour
                         Debug.Log("Max Health: " + reader["maxHealth"] + " Current Health: " + reader["currentHealth"] + " Attack Strength: " 
                             + reader["attackStrength"] + " Level: " + reader["level"] + " XP: " + reader["xp"] + " Xp to Next Level: " + reader["xpGoal"]);
                     }
-
                     reader.Close();
                 }
             }
-            
             connection.Close();
         }
     }
-
+    
 }

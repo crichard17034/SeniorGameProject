@@ -14,7 +14,8 @@ public class PlayerHealthManager : MonoBehaviour
     public Texture halfHealthIMG;
     public Texture quarterHealthIMG;
 
-
+    
+    //Sets the health bar value.
     public void setHealthBar(int newHealth)
     {
         currentHealth = newHealth;
@@ -22,6 +23,7 @@ public class PlayerHealthManager : MonoBehaviour
         setHealthIMG(currentHealth);
     }
 
+    //Sets the health bar icon based on percentage of health left.
     public void setHealthIMG(int healthValue)
     {
         int halfHealth = maxHealth/2;
@@ -41,6 +43,7 @@ public class PlayerHealthManager : MonoBehaviour
         }
     }
 
+    //When a new scene is loaded, the current stats from the previous scene are brought over.
     public void newSceneHealth(int newMaxHealth, int newCurrentHealth)
     {
         maxHealth = newMaxHealth;
@@ -48,6 +51,7 @@ public class PlayerHealthManager : MonoBehaviour
         setHealthBar(currentHealth);
     }
 
+    //When leveling up, the HUD is updated to reflect the changes in stats.
     public void levelUpHealth(int newMaxHealth)
     {
         maxHealth = newMaxHealth;

@@ -14,6 +14,5 @@ public class ElementStone : MonoBehaviour
             other.gameObject.GetComponent<PlayerController>().collectGem(gemName);
             Destroy(gameObject);
         }
-        
     }
 }

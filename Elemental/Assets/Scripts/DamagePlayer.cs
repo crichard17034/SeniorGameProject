@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class DamagePlayer : MonoBehaviour
 {
     public int damageValue;
-    private string element;
+    public string element;
 
+    //set's the enemy's attack type to an element
     public void setElementDamage(string enemyElement)
     {
         element = enemyElement;
     }
 
+    //When colliding with a player-tagged object, the player's lose health method is called while 
+    //taking in the damage taken and element of damage.
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Player")

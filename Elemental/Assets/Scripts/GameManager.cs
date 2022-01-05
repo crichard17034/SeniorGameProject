@@ -27,23 +27,11 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded()
     {
-        checkForOneManager();
         searchForPlayer();
     }
 
-    private void checkForOneManager()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
 
+    //Starts a new game by loading in the Wind Territory and setting starting player stats for the user.
     public void newGame()
     {
         SceneManager.LoadScene(1);
@@ -88,9 +76,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //checks if a game object with the tag "Database" is present within the current scene and sets the value of
+    //Checks if a game object with the tag "Database" is present within the current scene and sets the value of
     //the databaseSave value accordingly
-
     public void searchForDatabase()
     {
         if (databaseSave == null)
@@ -99,16 +86,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //calls the database to send the stored values to the player
     public void sendStatsToPlayer(GameObject player)
     {
         databaseSave.GetComponent<DatabaseSave>().sendToPlayer(player);
     }
 
+    //Updates the database with the stats taken from the player.
     public void updateDatabase(int mHP, int cHP, int aTK, int lV, int xP, int goalXP)
     {
         databaseSave.GetComponent<DatabaseSave>().updateStats(mHP, cHP, aTK, lV, xP, goalXP);
     }
 
+    //Calls the player to send its stats to the Game Manager.
     public void getPlayerStats()
     {
         player.GetComponent<PlayerController>().sendStats();

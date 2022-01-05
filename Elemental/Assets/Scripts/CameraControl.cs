@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float mouseSensitivity = 550f; //how quick the player can move the mouse and the camera
+    public float mouseSensitivity = 550f;
     public Transform playerBody;
     float xRotation = 0f;
 
     void Start() 
     {
-        Cursor.lockState = CursorLockMode.Locked; //This lock the cursor to the middle of the screen
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 

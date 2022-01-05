@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //Checks if the player is within the enemy's look range while also not within attack range and chases them if true
-    public void checkLookRadius()
+    private void checkLookRadius()
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
@@ -63,7 +63,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //Checks if the player's distance is within the attack range. If the attackTimer is less than 0, the enemy will attack before resetting the timer to 120.
-    public void checkAttackRadius()
+    private void checkAttackRadius()
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
@@ -87,7 +87,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //Causes the enemy to face the player when in range
-    public void faceTarget()
+    private void faceTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -95,14 +95,14 @@ public class EnemyController : MonoBehaviour
     }
 
     //When moving, the object's root position is set to move with the animation, preventing the enemy from getting soft locked in place.
-    public void OnAnimatorMove()
+    private void OnAnimatorMove()
     {
         Vector3 position = anim.rootPosition;
         transform.position = position;
     } 
 
     //Creates a visual representation of the look range and attack range in the editor
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
@@ -110,7 +110,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //On startup, the enemy is given an elemental value
-    public void setElement()
+    private void setElement()
     {
         gameObject.GetComponent<DamagePlayer>().setElementDamage(element);
     }

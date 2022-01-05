@@ -6,6 +6,7 @@ public class OneSaveSystem : MonoBehaviour
 {
     static OneSaveSystem instance;
     
+    //Ensures that only one save system is active at all times.
     void Awake()
     {
         if (instance != null)
