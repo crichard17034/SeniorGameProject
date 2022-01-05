@@ -38,6 +38,7 @@ public class EnemyController : MonoBehaviour
         checkAttackRadius();
     }
 
+    //Checks if the player is within the enemy's look range while also not within attack range and chases them if true
     public void checkLookRadius()
     {
         float distance = Vector3.Distance(target.position, transform.position);
@@ -62,7 +63,6 @@ public class EnemyController : MonoBehaviour
     }
 
     //Checks if the player's distance is within the attack range. If the attackTimer is less than 0, the enemy will attack before resetting the timer to 120.
-
     public void checkAttackRadius()
     {
         float distance = Vector3.Distance(target.position, transform.position);
@@ -86,6 +86,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //Causes the enemy to face the player when in range
     public void faceTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
@@ -100,6 +101,7 @@ public class EnemyController : MonoBehaviour
         transform.position = position;
     } 
 
+    //Creates a visual representation of the look range and attack range in the editor
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -107,6 +109,7 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
+    //On startup, the enemy is given an elemental value
     public void setElement()
     {
         gameObject.GetComponent<DamagePlayer>().setElementDamage(element);
@@ -135,11 +138,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //Sets the enemy health bar to match the current value
     public void setHealthBar(int newCurrentHealth)
     {
         enemyHealthBar.GetComponent<Slider>().value = newCurrentHealth;
     }
 
+    //When out of health, the enemy grants XP to the player and then destroys itself.
     public void die()
     {
         FindObjectOfType<PlayerController>().gainXP(xp);

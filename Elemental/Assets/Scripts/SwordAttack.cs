@@ -28,6 +28,7 @@ public class SwordAttack : MonoBehaviour
         checkForAttack();
     }
 
+    //if the attack button is held down, the animation for a swing will play and the hitbox is temporarily set to a trigger
     public void checkForAttack()
     {
         if (Input.GetButtonDown("Attack"))
@@ -45,15 +46,22 @@ public class SwordAttack : MonoBehaviour
         }
     }
 
-    //checks if the game object that collided with the sword is an enemy
+    //checks if the game object that collided with the sword is an enemy or barrier
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Enemy" && attacking == true)
         {
             other.gameObject.GetComponent<EnemyController>().loseHealth(currentElement, damageValue);
         }
+
+        if(other.tag == "Barrier" && attacking == true)
+        {
+             other.gameObject.GetComponent<Barrier>().checkForBreak(currentElement);
+        }
     }
 
+
+    //sets a new damage value when a level up occurs
     public void updateAttackStr(int newAtkStr)
     {
         damageValue = newAtkStr;

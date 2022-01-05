@@ -12,12 +12,7 @@ public class DatabaseSave : MonoBehaviour
     {
        createDB();
     }
-
-    void Awake()
-    { 
-        
-    }
-
+    
     //creates a table to store player stats if no table containing the data can be located
 
     public void createDB()

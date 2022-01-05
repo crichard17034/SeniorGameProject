@@ -7,7 +7,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
-    private float speed = 12; 
+    private float speed = 15; 
     private float sprintSpeed = 30; 
     private float gravity = -29.43f; 
     private float jumpHeight = 5f; 
@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
         elementResistence = "None";
 
     }
+
     void Update()
     {
         checkForMovement();
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         checkInvincibility();
     }
 
+    //Checks if the player is pressing a movement button and transforms the player position.
     public void checkForMovement()
     {
         float x = Input.GetAxis("Horizontal"); 
@@ -70,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
         if(move.x < 0 || move.x > 0 || move.y < 0 || move.y > 0 || move.z < 0 || move.z > 0)
         {
+            checkForSprint();
 
             if (!isWalking && controller.isGrounded && isSprinting)
             {
@@ -82,21 +85,23 @@ public class PlayerController : MonoBehaviour
                 PlayFootstep();
             }
         }
+        controller.Move(move * speed * Time.deltaTime);
+    }
 
+    //Checks if the player is holding shift and the stamina bar is greater than 0. If true, sprinting will occur.
+    private void checkForSprint()
+    {
         if (Input.GetButton("Sprint") && controller.isGrounded && staminaBar.GetComponent<Slider>().value > 0)
         {
-            if (move.x < 0 || move.x > 0 || move.y < 0 || move.y > 0 || move.z < 0 || move.z > 0)
-            {
-                isSprinting = true;
-                speed = sprintSpeed;
-                staminaBar.GetComponent<Slider>().value -= Time.deltaTime * 10;
-                sprintCooldown = 5;
-            }
+            isSprinting = true;
+            speed = sprintSpeed;
+            staminaBar.GetComponent<Slider>().value -= Time.deltaTime * 10;
+            sprintCooldown = 5;
         }
         else
         {
             isSprinting = false;
-            if (speed > 12)
+            if (speed > 15)
             {
                 speed--;
             }
@@ -106,16 +111,10 @@ public class PlayerController : MonoBehaviour
                 sprintCooldown -= Time.deltaTime;
             }
         }
-
-        if (staminaBar.GetComponent<Slider>().value < 100 && sprintCooldown <= 0)
-        {
-            staminaBar.GetComponent<Slider>().value += Time.deltaTime * 5;
-        }
-
-        controller.Move(move * speed * Time.deltaTime);
     }
 
-    public void checkForGround()
+    //Checks if the player is currently touching solid ground
+    private void checkForGround()
     {
         velocity.y += gravity * Time.deltaTime; 
         controller.Move(velocity * Time.deltaTime); 
@@ -126,7 +125,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void checkForJump()
+    private void checkForJump()
     {
         if (Input.GetButtonDown("Jump") && controller.isGrounded) 
         {
@@ -137,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
     //checkForCeiling - uses the collsionFlags on the controller to check if a collision occured at the top of the player.
 
-    public void checkForCeiling()
+    private void checkForCeiling()
     {
         if ((controller.collisionFlags & CollisionFlags.Above) != 0)
         {
@@ -148,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     //Checks if the player is holding down a button and if the element has been unlocked. If true, it will adjust the element weaknesses.
     //NOTE: THIS SECTION IS TO BE REDONE AS A DICTIONARY TO REDUCE CODE REUSAGE
-    public void checkForSwap()
+    private void checkForSwap()
     {
         if(Input.GetButtonDown("FireSwitch") && fireStone == true)
         {
@@ -198,8 +197,19 @@ public class PlayerController : MonoBehaviour
         sword.GetComponent<SwordAttack>().changeElement(currentElement);
     }
 
+    //Checks if element usage or sprinting is draining stamina. Otherwise, if the sprint cooldown is <= 0, regain stamina.
     private void checkForStaminaDrain()
     {
+        if (sprintCooldown > 0)
+        {
+            sprintCooldown -= Time.deltaTime;
+        }
+
+        if (staminaBar.GetComponent<Slider>().value < 100 && sprintCooldown <= 0)
+        {
+            staminaBar.GetComponent<Slider>().value += Time.deltaTime * 7;
+        }        
+        
         if(currentElement != "None")
         {
             staminaBar.GetComponent<Slider>().value -= Time.deltaTime * 10;
@@ -240,16 +250,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void gainHealth(int healthValue)
-    {
-        currentHealth += healthValue;
-        if(currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
-    }
-
+    //Grants the player XP and calls to check for a level increase.
     public void gainXP(int xpValue)
     {
         if(level != 20)
@@ -260,6 +261,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Checks if the player's current XP is greater than or equal to the goal and levels up the player.
     private void checkLevelUp()
     {
         if(xp >= xpGoal)
@@ -283,12 +285,9 @@ public class PlayerController : MonoBehaviour
         expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
-
-        checkLevelUp();
     }
 
     //gets the values of each stat from the database and applies them to the corresponding player stats.
-
     public void setStats(int savedMHP, int savedCHP, int savedATK, int savedLV, int savedXP, int savedGoalXP)
     {
         maxHealth = savedMHP;
@@ -304,6 +303,7 @@ public class PlayerController : MonoBehaviour
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
     }
 
+    //Sends current stats to the database
     public void sendStats()
     {
         FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal);
@@ -355,17 +355,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Checks if the player has active I-Frames (Invincibiltiy)
     private void checkInvincibility()
     {
         if(invincibility > 0f)
         {
             invincibility --;
         }
-    }
-
-    public string getElement()
-    {
-        return currentElement;
     }
 
     public void PlayFootstep()

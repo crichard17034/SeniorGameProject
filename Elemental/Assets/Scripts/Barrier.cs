@@ -6,14 +6,14 @@ public class Barrier : MonoBehaviour
 {
     public string elementWeakness;
 
-    void OnCollisionEnter(Collision collision)
+    //checks if the player's element from the sword is the same as the barrier's weakness and destroys it if true
+    public void checkForBreak(string playerElement)
     {
-        if(collision.gameObject.tag == "Player")
+        if(playerElement == elementWeakness)
         {
-            if(collision.gameObject.GetComponent<PlayerController>().getElement() == elementWeakness)
-            {
-                Destroy(gameObject);
-            }
+            Destroy (gameObject);
+            
         }
+        Debug.Log("Destroyed");
     }
 }
