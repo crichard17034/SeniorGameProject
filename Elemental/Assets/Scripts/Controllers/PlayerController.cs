@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     private bool fireStone;
     private bool waterStone;
     private bool windStone;
-    private bool darkStone;
-    private bool lightStone;
     public Transform groundCheck; 
     public Transform headCheck; 
     public float groundDistance = 5f; 
@@ -49,7 +47,6 @@ public class PlayerController : MonoBehaviour
         currentElement = "None";
         elementWeakness = "None";
         elementResistence = "None";
-
     }
 
     void Update()
@@ -130,7 +127,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && controller.isGrounded) 
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            sendStats();
         }
     }
 
@@ -146,7 +142,6 @@ public class PlayerController : MonoBehaviour
 
 
     //Checks if the player is holding down a button and if the element has been unlocked. If true, it will adjust the element weaknesses.
-    //NOTE: THIS SECTION IS TO BE REDONE AS A DICTIONARY TO REDUCE CODE REUSAGE
     private void checkForSwap()
     {
         if(Input.GetButtonDown("FireSwitch") && fireStone == true)
@@ -223,6 +218,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Causes the player to lose health based on the element of the damage source and the damage value.
     public void loseHealth(int damageValue, string element)
     {
         if(invincibility <= 0f)
@@ -285,6 +281,7 @@ public class PlayerController : MonoBehaviour
         expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
+        sendStats();
     }
 
     //gets the values of each stat from the database and applies them to the corresponding player stats.
@@ -310,7 +307,6 @@ public class PlayerController : MonoBehaviour
     }
 
     //The name of the gem collected is passed into the collectGem function and either sets the corresponding element to true or grants 500 xp.
-    //NOTE: THIS SECTION IS TO BE REDONE AS A DICTIONARY TO REDUCE CODE REUSAGE
 
     public void collectGem(string gemName)
     {

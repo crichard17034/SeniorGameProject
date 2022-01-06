@@ -41,7 +41,7 @@ public class DatabaseSave : MonoBehaviour
             using(var command = connection.CreateCommand())
             {
                 command.CommandText = "DELETE FROM player; INSERT INTO player (maxHealth, currentHealth, " +
-                    "attackStrength, level, xp, xpGoal) VALUES('"+ maxHealth +"', '"+ currentHealth +"', '"+ 15 +"', '"+ 1 +"', '"+ 0 +"', '"+ 100+"');";
+                    "attackStrength, level, xp, xpGoal) VALUES('"+ maxHealth +"', '"+ currentHealth +"', '"+ 15 +"', '"+ 1 +"', '"+ 0 +"', '"+ 100 +"');";
                 command.ExecuteNonQuery();
             }
             
