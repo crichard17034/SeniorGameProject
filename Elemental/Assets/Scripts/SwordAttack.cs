@@ -15,12 +15,14 @@ public class SwordAttack : MonoBehaviour
     public Material fireColor;
     public Material waterColor;
     public Material baseColor;
+    public bool gamePaused;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         swordHitbox = GetComponent<Collider>();
         swordHitbox.isTrigger = false;
+        gamePaused =false;
     }
 
     private void Update()
@@ -31,7 +33,7 @@ public class SwordAttack : MonoBehaviour
     //if the attack button is held down, the animation for a swing will play and the hitbox is temporarily set to a trigger
     public void checkForAttack()
     {
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Attack") && gamePaused == false)
         {
             anim.SetBool("attacking", true);
             swordHitbox.isTrigger = true;
@@ -56,7 +58,7 @@ public class SwordAttack : MonoBehaviour
 
         if(other.tag == "Barrier" && attacking == true)
         {
-             other.gameObject.GetComponent<Barrier>().checkForBreak(currentElement);
+            other.gameObject.GetComponent<Barrier>().checkForBreak(currentElement);
         }
     }
 
@@ -87,6 +89,18 @@ public class SwordAttack : MonoBehaviour
         else
         {
             blade.GetComponent<MeshRenderer>().material = baseColor;
+        }
+    }
+
+    public void pauseGameStatus()
+    {
+        if(gamePaused == false)
+        {
+            gamePaused= true;
+        }
+        else
+        {
+            gamePaused = false;
         }
     }
 }

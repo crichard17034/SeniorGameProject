@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         unlockMouse();
+        Time.timeScale = 1f;
     }
 
     public void winGame()

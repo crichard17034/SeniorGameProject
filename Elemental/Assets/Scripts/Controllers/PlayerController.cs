@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
     public GameObject sword;
     public float sprintCooldown; 
     [SerializeField] Footsteps soundGenerator;
+    [SerializeField] ElementSounds elementGenerator;
     [SerializeField] float footStepTimer;
+    public AudioSource ouchSound;
 
 
     void Awake()
@@ -151,6 +153,7 @@ public class PlayerController : MonoBehaviour
                 currentElement = "Fire";
                 elementWeakness = "Water";
                 elementResistence = "Wind";
+                playElementSound(0);
             }
             else
             {
@@ -166,6 +169,7 @@ public class PlayerController : MonoBehaviour
                 currentElement = "Water";
                 elementWeakness = "Wind";
                 elementResistence = "Fire";
+                playElementSound(1);
             }
             else
             {
@@ -181,6 +185,7 @@ public class PlayerController : MonoBehaviour
                 currentElement = "Wind";
                 elementWeakness = "Fire";
                 elementResistence = "Water";
+                playElementSound(2);
             }
             else
             {
@@ -243,6 +248,8 @@ public class PlayerController : MonoBehaviour
             } 
             healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
             invincibility += 120f;
+            ouchSound.Play();
+            
         }
     }
 
@@ -376,5 +383,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(timer);
 
         isWalking = false;
+    }
+
+    void playElementSound(int entryNumber)
+    {
+        elementGenerator.audioSource.clip = elementGenerator.elementSoundsList[entryNumber];
+
+        elementGenerator.audioSource.Play();
     }
 }

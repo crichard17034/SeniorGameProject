@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     public float attackTimer = 120f;
     public GameObject enemyHealthBar; 
     Collider slimeHitbox;
+    [SerializeField] DamageSounds soundGenerator;
 
 
     void Start()
@@ -120,14 +121,18 @@ public class EnemyController : MonoBehaviour
         if(atkElement == elementWeakness && element != "None")
         {
             currentHealth -= (damageValue * 2);
+            playDamageSound(0);
+
         }
         else if(atkElement == elementResistence && element != "None")
         {
             currentHealth -= (damageValue /2);
+            playDamageSound(1);
         }
         else
         {
             currentHealth -= damageValue;
+            playDamageSound(2);
         }
 
         setHealthBar(currentHealth);
@@ -149,5 +154,12 @@ public class EnemyController : MonoBehaviour
     {
         FindObjectOfType<PlayerController>().gainXP(xp);
         Destroy(gameObject);
+    }
+
+    private void playDamageSound(int entryNumber)
+    {
+        soundGenerator.audioSource.clip = soundGenerator.damageSoundsList[entryNumber];
+
+        soundGenerator.audioSource.Play();
     }
 }
