@@ -12,7 +12,7 @@ public class PauseMenu : MonoBehaviour
     public void Update()
     {
         //checks if the escape key is pressed and pauses or resumes the game
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetButtonDown("Pause"))
         {
             if(gamePaused)
             {
