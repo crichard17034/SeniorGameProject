@@ -31,6 +31,7 @@ public class SwordAttack : MonoBehaviour
     }
 
     //if the attack button is held down, the animation for a swing will play and the hitbox is temporarily set to a trigger
+    //the method also requires the game to be paused so as to prevent swinging while the pause menu is up
     public void checkForAttack()
     {
         if (Input.GetButtonDown("Attack") && gamePaused == false)

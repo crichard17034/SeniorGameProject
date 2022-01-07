@@ -11737,7 +11737,7 @@ PrefabInstance:
     - target: {fileID: 2927674603914198273, guid: ac374c1ef4bb5f14aa660246ab740e26,
         type: 3}
       propertyPath: m_Volume
-      value: 0.12
+      value: 0.205
       objectReference: {fileID: 0}
     - target: {fileID: 2927674603914198273, guid: ac374c1ef4bb5f14aa660246ab740e26,
         type: 3}
@@ -11848,6 +11848,11 @@ PrefabInstance:
         type: 3}
       propertyPath: currentElement
       value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981149416920627846, guid: ac374c1ef4bb5f14aa660246ab740e26,
+        type: 3}
+      propertyPath: groundDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2981149416920627846, guid: ac374c1ef4bb5f14aa660246ab740e26,
         type: 3}

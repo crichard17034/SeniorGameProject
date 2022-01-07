@@ -292,7 +292,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //gets the values of each stat from the database and applies them to the corresponding player stats.
-    public void setStats(int savedMHP, int savedCHP, int savedATK, int savedLV, int savedXP, int savedGoalXP)
+    public void setStats(int savedMHP, int savedCHP, int savedATK, int savedLV, int savedXP, int savedGoalXP, int savedFireStone, int savedWaterStone, int savedWindStone)
     {
         maxHealth = savedMHP;
         currentHealth = savedCHP;
@@ -300,6 +300,32 @@ public class PlayerController : MonoBehaviour
         level = savedLV;
         xp = savedXP;
         xpGoal = savedGoalXP;
+
+        if(savedFireStone == 0)
+        {
+            fireStone = false;
+        }
+        else
+        {
+            fireStone = true;
+        }
+        if(savedWaterStone == 0)
+        {
+            waterStone = false;
+        }
+        else
+        {
+            waterStone = true;
+        }
+        if(savedWindStone == 0)
+        {
+            windStone = false;
+        }
+        else
+        {
+            windStone = true;
+        }
+
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
         healthBar.GetComponent<PlayerHealthManager>().newSceneHealth(maxHealth, currentHealth);
         expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
@@ -310,7 +336,36 @@ public class PlayerController : MonoBehaviour
     //Sends current stats to the database
     public void sendStats()
     {
-        FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal);
+        int fireStoneInt;
+        int waterStoneInt;
+        int windStoneInt;
+
+        if(fireStone == false)
+        {
+            fireStoneInt = 0;
+        }
+        else
+        {
+            fireStoneInt = 1;
+        }
+        if(waterStone == false)
+        {
+            waterStoneInt = 0;
+        }
+        else
+        {
+            waterStoneInt = 1;
+        }
+        if(windStone == false)
+        {
+            windStoneInt = 0;
+        }
+        else
+        {
+            windStoneInt = 1;
+        }
+
+        FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal, fireStoneInt, waterStoneInt, windStoneInt);
     }
 
     //The name of the gem collected is passed into the collectGem function and either sets the corresponding element to true or grants 500 xp.

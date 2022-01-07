@@ -23,7 +23,7 @@ public class DatabaseSave : MonoBehaviour
             using(var command = connection.CreateCommand())
             {
                 command.CommandText = "CREATE TABLE IF NOT EXISTS player (maxHealth INT, currentHealth INT, " +
-                    "attackStrength INT, level INT, xp INT, xpGoal INT);";
+                    "attackStrength INT, level INT, xp INT, xpGoal INT, fireStone INT, waterStone INT, windStone INT);";
                 command.ExecuteNonQuery();
             }
             
@@ -32,7 +32,7 @@ public class DatabaseSave : MonoBehaviour
     }
 
     //When starting a new game, any current entries in the player table are removed and the starting stats are inserted in their place
-    public void newGameStart(int maxHealth, int currentHealth, int attackStrength, int level, int xp, int xpGoal)
+    public void newGameStart(int maxHealth, int currentHealth, int attackStrength, int level, int xp, int xpGoal, int fireStone, int waterStone, int windStone)
     {
         using(var connection = new SqliteConnection(dbName))
         {
@@ -41,7 +41,8 @@ public class DatabaseSave : MonoBehaviour
             using(var command = connection.CreateCommand())
             {
                 command.CommandText = "DELETE FROM player; INSERT INTO player (maxHealth, currentHealth, " +
-                    "attackStrength, level, xp, xpGoal) VALUES('"+ maxHealth +"', '"+ currentHealth +"', '"+ 15 +"', '"+ 1 +"', '"+ 0 +"', '"+ 100 +"');";
+                    "attackStrength, level, xp, xpGoal, fireStone, waterStone, windStone)" + 
+                    "VALUES('"+ maxHealth +"', '"+ currentHealth +"', '"+ attackStrength +"', '"+ level +"', '"+ xp +"', '"+ xpGoal +"', '"+ fireStone +"', '"+ waterStone +"', '"+ windStone +"');";
                 command.ExecuteNonQuery();
             }
             
@@ -50,7 +51,7 @@ public class DatabaseSave : MonoBehaviour
     }
 
     //takes in the current stats of the player and updates the values within the table
-    public void updateStats(int maxHP, int currentHP, int attackSTR, int lv, int exp, int expGoal)
+    public void updateStats(int maxHP, int currentHP, int attackSTR, int lv, int exp, int expGoal, int fireStone, int waterStone, int windStone)
     {
         using(var connection = new SqliteConnection(dbName))
         {
@@ -59,7 +60,8 @@ public class DatabaseSave : MonoBehaviour
             using(var command = connection.CreateCommand())
             {
                 command.CommandText = "UPDATE player SET maxHealth = '"+ maxHP +"', currentHealth = '" + currentHP +"'," +
-                "attackStrength = '" + attackSTR + "', level = '" + lv + "', xp = '" + exp + "', xpGoal = '" + expGoal + "';";
+                "attackStrength = '" + attackSTR + "', level = '" + lv + "', xp = '" + exp + "', xpGoal = '" + expGoal + "',"
+                + "fireStone = '" + fireStone + "', waterStone = '" + waterStone + "', windStone = '" + windStone + "';";
                 command.ExecuteNonQuery();
             }
             
@@ -82,7 +84,8 @@ public class DatabaseSave : MonoBehaviour
                 {
                     while (reader.Read())
                     {
-                        playerObject.GetComponent<PlayerController>().setStats(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
+                        playerObject.GetComponent<PlayerController>().setStats(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4), 
+                        + reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8));
                     }
 
                     reader.Close();

@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Update()
     {
+        //checks if the escape key is pressed and pauses or resumes the game
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(gamePaused)
@@ -24,6 +25,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    //the game's time scale is set to 1f, the cursor is hidden and locked to the center of the screen, and the pause menu is hidden so gameplay can resume
     public void resumeGame()
     {
         pauseMenu.SetActive(false);
@@ -34,9 +36,9 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
     }
 
+    //the game's time scale is set to 0f, effectively freezing gameplay while setting the pause menu on the canvas to visible. The cursor is made visible and unlocked for movement.
     public void pauseGame()
     {
-        
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         gamePaused = true;

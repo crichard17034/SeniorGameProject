@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public void newGame()
     {
         SceneManager.LoadScene(1);
-        databaseSave.GetComponent<DatabaseSave>().newGameStart(100, 100, 15, 1, 0, 100);
+        databaseSave.GetComponent<DatabaseSave>().newGameStart(100, 100, 15, 1, 0, 100, 0, 0, 0);
     }
     
     public void continueGame()
@@ -94,9 +94,9 @@ public class GameManager : MonoBehaviour
     }
 
     //Updates the database with the stats taken from the player.
-    public void updateDatabase(int mHP, int cHP, int aTK, int lV, int xP, int goalXP)
+    public void updateDatabase(int mHP, int cHP, int aTK, int lV, int xP, int goalXP, int fireStone, int waterStone, int windStone)
     {
-        databaseSave.GetComponent<DatabaseSave>().updateStats(mHP, cHP, aTK, lV, xP, goalXP);
+        databaseSave.GetComponent<DatabaseSave>().updateStats(mHP, cHP, aTK, lV, xP, goalXP, fireStone, waterStone, windStone);
     }
 
     //Calls the player to send its stats to the Game Manager.
