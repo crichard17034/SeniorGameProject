@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ButtonClick : MonoBehaviour
 {
     public AudioSource buttonSound;
+    public GameObject mainMenu;
+    public GameObject instructionMenu;
     
     private void playSound()
     {
@@ -35,6 +37,20 @@ public class ButtonClick : MonoBehaviour
     {
         playSound();
         FindObjectOfType<GameManager>().titleScreen();
+    }
+
+    public void instructionsScreen()
+    {
+        playSound();
+        instructionMenu.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    public void returnToMainMenu()
+    {
+        playSound();
+        instructionMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 
     public void saveAndTitleScreen()
