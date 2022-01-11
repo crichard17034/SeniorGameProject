@@ -1440,7 +1440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc13047675ef634e8e59e7b7747f0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  databaseSave: {fileID: 1500786452}
+  databaseSave: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &1300666986
 Transform:

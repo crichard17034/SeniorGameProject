@@ -9,7 +9,7 @@ public class SwordAttack : MonoBehaviour
     Collider swordHitbox;
     public GameObject blade;
     private int damageValue;
-    public string currentElement;
+    private string currentElement;
     bool attacking;
     public Material windColor;
     public Material fireColor;
@@ -22,7 +22,7 @@ public class SwordAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         swordHitbox = GetComponent<Collider>();
         swordHitbox.isTrigger = false;
-        gamePaused =false;
+        gamePaused = false;
     }
 
     private void Update()
@@ -63,7 +63,6 @@ public class SwordAttack : MonoBehaviour
         }
     }
 
-
     //sets a new damage value when a level up occurs
     public void updateAttackStr(int newAtkStr)
     {
@@ -97,7 +96,7 @@ public class SwordAttack : MonoBehaviour
     {
         if(gamePaused == false)
         {
-            gamePaused= true;
+            gamePaused = true;
         }
         else
         {

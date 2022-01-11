@@ -1,21 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Data;
+using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    static GameManager instance; 
     private Scene currentScene;
     private string sceneName;
     public GameObject databaseSave;
     public GameObject player;
-
-    void Start()
-    {
-        searchForDatabase();
-        searchForPlayer();
-    }
 
     void Awake()
     {
@@ -25,11 +21,10 @@ public class GameManager : MonoBehaviour
         searchForPlayer();
     }
 
-    void OnSceneLoaded()
+    void Start()
     {
-        searchForPlayer();
+        sendStatsToPlayer(player);
     }
-
 
     //Starts a new game by loading in the Wind Territory and setting starting player stats for the user.
     public void newGame()
@@ -68,18 +63,22 @@ public class GameManager : MonoBehaviour
     }
 
     //checks if a game object with the tag "Player" is present and sets the value of the player variable
-    public void searchForPlayer()
+    private void searchForPlayer()
     {
         if(sceneName == "Wind Territory")
         {
-            player = GameObject.FindWithTag("Player");
-            sendStatsToPlayer(player);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Debug.Log("Player Found");
+        }
+        else
+        {
+            Debug.Log("Not in WInd Territory Scene");
         }
     }
 
     //Checks if a game object with the tag "Database" is present within the current scene and sets the value of
     //the databaseSave value accordingly
-    public void searchForDatabase()
+    private void searchForDatabase()
     {
         if (databaseSave == null)
         {
@@ -88,9 +87,16 @@ public class GameManager : MonoBehaviour
     }
 
     //calls the database to send the stored values to the player
-    public void sendStatsToPlayer(GameObject player)
+    private void sendStatsToPlayer(GameObject playerObject)
     {
-        databaseSave.GetComponent<DatabaseSave>().sendToPlayer(player);
+        if(sceneName == "Wind Territory")
+        {
+            databaseSave.GetComponent<DatabaseSave>().sendToPlayer(playerObject);
+        }
+        else
+        {
+            Debug.Log("Stats not sent to player");
+        }  
     }
 
     //Updates the database with the stats taken from the player.
@@ -106,7 +112,7 @@ public class GameManager : MonoBehaviour
     }
     
     //allows the cursor to freely move on screen when on menus
-    public void unlockMouse()
+    private void unlockMouse()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

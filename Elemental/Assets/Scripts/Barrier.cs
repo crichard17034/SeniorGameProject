@@ -14,8 +14,12 @@ public class Barrier : MonoBehaviour
         {
             breakSound.Play();
             Destroy (gameObject);
-            
+            Debug.Log("Destroyed");
         }
-        Debug.Log("Destroyed");
+        else
+        {
+            Debug.Log("Wrong Element");
+        }
+        
     }
 }

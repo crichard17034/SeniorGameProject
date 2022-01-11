@@ -36,4 +36,11 @@ public class ButtonClick : MonoBehaviour
         playSound();
         FindObjectOfType<GameManager>().titleScreen();
     }
+
+    public void saveAndTitleScreen()
+    {
+        playSound();
+        FindObjectOfType<GameManager>().getPlayerStats();
+        FindObjectOfType<GameManager>().titleScreen();
+    }
 }

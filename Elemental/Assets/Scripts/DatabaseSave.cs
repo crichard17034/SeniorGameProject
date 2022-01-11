@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
+using System.IO;
 using Mono.Data.Sqlite;
 
 public class DatabaseSave : MonoBehaviour
 {
-    private string dbName = "URI=file:PlayerStats.db";
+    private string dbName;
+    private string dbPath; 
 
     void Start()
-    {
-       createDB();
+    {   
+        dbName = "URI=file:" + Application.persistentDataPath + "/PlayerStats.db";
+        createDB();
+        Debug.Log("dataPath" + dbName);
     }
     
     //creates a table to store player stats if no table containing the data can be located
     public void createDB()
     {
-        using (var connection = new SqliteConnection(dbName))
+        using (IDbConnection connection = new SqliteConnection(dbName))
         {
             connection.Open();
 
-            using(var command = connection.CreateCommand())
+            using(IDbCommand command = connection.CreateCommand())
             {
                 command.CommandText = "CREATE TABLE IF NOT EXISTS player (maxHealth INT, currentHealth INT, " +
                     "attackStrength INT, level INT, xp INT, xpGoal INT, fireStone INT, waterStone INT, windStone INT);";
@@ -34,11 +38,11 @@ public class DatabaseSave : MonoBehaviour
     //When starting a new game, any current entries in the player table are removed and the starting stats are inserted in their place
     public void newGameStart(int maxHealth, int currentHealth, int attackStrength, int level, int xp, int xpGoal, int fireStone, int waterStone, int windStone)
     {
-        using(var connection = new SqliteConnection(dbName))
+        using(IDbConnection connection = new SqliteConnection(dbName))
         {
             connection.Open();
             
-            using(var command = connection.CreateCommand())
+            using(IDbCommand command = connection.CreateCommand())
             {
                 command.CommandText = "DELETE FROM player; INSERT INTO player (maxHealth, currentHealth, " +
                     "attackStrength, level, xp, xpGoal, fireStone, waterStone, windStone)" + 
@@ -53,11 +57,11 @@ public class DatabaseSave : MonoBehaviour
     //takes in the current stats of the player and updates the values within the table
     public void updateStats(int maxHP, int currentHP, int attackSTR, int lv, int exp, int expGoal, int fireStone, int waterStone, int windStone)
     {
-        using(var connection = new SqliteConnection(dbName))
+        using(IDbConnection connection = new SqliteConnection(dbName))
         {
             connection.Open();
             
-            using(var command = connection.CreateCommand())
+            using(IDbCommand command = connection.CreateCommand())
             {
                 command.CommandText = "UPDATE player SET maxHealth = '"+ maxHP +"', currentHealth = '" + currentHP +"'," +
                 "attackStrength = '" + attackSTR + "', level = '" + lv + "', xp = '" + exp + "', xpGoal = '" + expGoal + "',"
@@ -72,11 +76,11 @@ public class DatabaseSave : MonoBehaviour
     //opens a connection and IDataReader for the player table and reads off each value to the player's controller to update stats.
     public void sendToPlayer(GameObject playerObject)
     {
-        using(var connection = new SqliteConnection(dbName))
+        using(IDbConnection connection = new SqliteConnection(dbName))
         {
             connection.Open();
             
-            using(var command = connection.CreateCommand())
+            using(IDbCommand command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT * FROM player;";
 
@@ -92,17 +96,18 @@ public class DatabaseSave : MonoBehaviour
                 }
             }
             connection.Close();
+            Debug.Log("Stats Sent to Player");
         }
     }
 
     //reads off the values of player stats in a debug log. Mainly used for testing purposes
     public void viewStats()
     {
-        using(var connection = new SqliteConnection(dbName))
+        using(IDbConnection connection = new SqliteConnection(dbName))
         {
             connection.Open();
             
-            using(var command = connection.CreateCommand())
+            using(IDbCommand command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT * FROM player;";
 

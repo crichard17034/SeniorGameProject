@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private int level;
     private int xp;
     private int xpGoal;
-    public string currentElement;
+    private string currentElement;
     private string elementWeakness;
     private string elementResistence;
     private bool fireStone;
@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 5f; 
     public LayerMask groundMask;
     Vector3 velocity;
-    public bool isWalking = false;
-    public bool isSprinting = false; 
+    private bool isWalking = false;
+    private bool isSprinting = false; 
     public GameObject staminaBar; 
     public GameObject healthBar;
     public GameObject levelText;
@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
                 currentHealth -= damageValue;
             }
         
-            if(currentHealth < 0)
+            if(currentHealth <= 0)
             {
                 currentHealth = 0;
                 FindObjectOfType<GameManager>().gameOver();
@@ -249,8 +249,20 @@ public class PlayerController : MonoBehaviour
             healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
             invincibility += 120f;
             ouchSound.Play();
-            
         }
+    }
+
+    //recovers player health while also keeping it from going over the maxHealth value
+    public void gainHealth(int healthValue)
+    {
+        currentHealth += healthValue;
+
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        } 
+
+        healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);    
     }
 
     //Grants the player XP and calls to check for a level increase.
@@ -285,10 +297,52 @@ public class PlayerController : MonoBehaviour
 
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
         healthBar.GetComponent<PlayerHealthManager>().levelUpHealth(maxHealth);
-        expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
-        sendStats();
+        
+        if(level == 20)
+        {
+            expText.GetComponent<TextMeshProUGUI>().text = "MAX LVL";
+        }
+        else
+        {
+            expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+        }
+    }
+
+    //Sends current stats to the GameManager
+    public void sendStats()
+    {
+        int fireStoneInt;
+        int waterStoneInt;
+        int windStoneInt;
+
+        if(fireStone == false)
+        {
+            fireStoneInt = 0;
+        }
+        else
+        {
+            fireStoneInt = 1;
+        }
+        if(waterStone == false)
+        {
+            waterStoneInt = 0;
+        }
+        else
+        {
+            waterStoneInt = 1;
+        }
+        if(windStone == false)
+        {
+            windStoneInt = 0;
+        }
+        else
+        {
+            windStoneInt = 1;
+        }
+
+        FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal, fireStoneInt, waterStoneInt, windStoneInt);
     }
 
     //gets the values of each stat from the database and applies them to the corresponding player stats.
@@ -327,45 +381,20 @@ public class PlayerController : MonoBehaviour
         }
 
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
-        healthBar.GetComponent<PlayerHealthManager>().newSceneHealth(maxHealth, currentHealth);
-        expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+        healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
         levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
-    }
 
-    //Sends current stats to the database
-    public void sendStats()
-    {
-        int fireStoneInt;
-        int waterStoneInt;
-        int windStoneInt;
-
-        if(fireStone == false)
+        if(level == 20)
         {
-            fireStoneInt = 0;
+            expText.GetComponent<TextMeshProUGUI>().text = "MAX LVL";
         }
         else
         {
-            fireStoneInt = 1;
-        }
-        if(waterStone == false)
-        {
-            waterStoneInt = 0;
-        }
-        else
-        {
-            waterStoneInt = 1;
-        }
-        if(windStone == false)
-        {
-            windStoneInt = 0;
-        }
-        else
-        {
-            windStoneInt = 1;
+            expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         }
 
-        FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal, fireStoneInt, waterStoneInt, windStoneInt);
+        Debug.Log("Stats Recieved");
     }
 
     //The name of the gem collected is passed into the collectGem function and either sets the corresponding element to true or grants 500 xp.
