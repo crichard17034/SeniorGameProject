@@ -34,6 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087511345854900312, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
+      propertyPath: element
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087511345854900312, guid: 14e9ce7ab5f89d14290132a86e420ef3,
+        type: 3}
       propertyPath: damageValue
       value: 15
       objectReference: {fileID: 0}
@@ -140,7 +145,7 @@ PrefabInstance:
     - target: {fileID: 7969840637375042830, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: m_Name
-      value: Water Sillium
+      value: Water Sillium Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8130681603993361901, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}

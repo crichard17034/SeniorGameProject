@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private int xpGoal;
     private string currentElement;
     private string elementWeakness;
-    private string elementResistence;
+    private string elementResistance;
     private bool fireStone;
     private bool waterStone;
     private bool windStone;
@@ -42,13 +42,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ElementSounds elementGenerator;
     [SerializeField] float footStepTimer;
     public AudioSource ouchSound;
+    public AudioSource levelUpSound;
 
 
     void Awake()
     {
         currentElement = "None";
         elementWeakness = "None";
-        elementResistence = "None";
+        elementResistance = "None";
     }
 
     void Update()
@@ -152,14 +153,14 @@ public class PlayerController : MonoBehaviour
             {
                 currentElement = "Fire";
                 elementWeakness = "Water";
-                elementResistence = "Wind";
+                elementResistance = "Wind";
                 playElementSound(0);
             }
             else
             {
                 currentElement = "None";
                 elementWeakness = "None";
-                elementResistence = "None";
+                elementResistance = "None";
             }
         }
         else if(Input.GetButtonDown("WaterSwitch") && waterStone == true)
@@ -168,14 +169,14 @@ public class PlayerController : MonoBehaviour
             {
                 currentElement = "Water";
                 elementWeakness = "Wind";
-                elementResistence = "Fire";
+                elementResistance = "Fire";
                 playElementSound(1);
             }
             else
             {
                 currentElement = "None";
                 elementWeakness = "None";
-                elementResistence = "None";
+                elementResistance = "None";
             }
         }
         else if(Input.GetButtonDown("WindSwitch") && windStone == true)
@@ -184,14 +185,14 @@ public class PlayerController : MonoBehaviour
             {
                 currentElement = "Wind";
                 elementWeakness = "Fire";
-                elementResistence = "Water";
+                elementResistance = "Water";
                 playElementSound(2);
             }
             else
             {
                 currentElement = "None";
                 elementWeakness = "None";
-                elementResistence = "None";
+                elementResistance = "None";
             }
         }
         sword.GetComponent<SwordAttack>().changeElement(currentElement);
@@ -219,7 +220,7 @@ public class PlayerController : MonoBehaviour
         {
             currentElement = "None";
             elementWeakness = "None";
-            elementResistence = "None";
+            elementResistance = "None";
         }
     }
 
@@ -232,7 +233,7 @@ public class PlayerController : MonoBehaviour
             {
                 currentHealth -= (damageValue * 2);
             }
-            else if(element == elementResistence && currentElement != "None")
+            else if(element == elementResistance && currentElement != "None")
             {
                 currentHealth -= (damageValue /2);
             }
@@ -308,6 +309,7 @@ public class PlayerController : MonoBehaviour
         {
             expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         }
+        levelUpSound.Play();
     }
 
     //Sends current stats to the GameManager
@@ -451,7 +453,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayFootstep()
+    private void PlayFootstep()
     {
         StartCoroutine("PlayStep", footStepTimer);
     }
@@ -469,7 +471,7 @@ public class PlayerController : MonoBehaviour
         isWalking = false;
     }
 
-    void playElementSound(int entryNumber)
+    private void playElementSound(int entryNumber)
     {
         elementGenerator.audioSource.clip = elementGenerator.elementSoundsList[entryNumber];
 

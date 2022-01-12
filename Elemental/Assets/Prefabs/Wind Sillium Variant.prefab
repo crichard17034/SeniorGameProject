@@ -39,6 +39,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087511345854900312, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
+      propertyPath: element
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087511345854900312, guid: 14e9ce7ab5f89d14290132a86e420ef3,
+        type: 3}
       propertyPath: damageValue
       value: 15
       objectReference: {fileID: 0}
