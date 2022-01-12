@@ -657,7 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageValue: 10
-  element: 
+  element: None
 --- !u!195 &7087511345854900310
 NavMeshAgent:
   m_ObjectHideFlags: 0

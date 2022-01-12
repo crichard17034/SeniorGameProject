@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
     private int level;
     private int xp;
     private int xpGoal;
-    public string currentElement;
+    private string currentElement;
     private string elementWeakness;
-    private string elementResistence;
+    private string elementResistance;
     private bool fireStone;
     private bool waterStone;
     private bool windStone;
@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 5f; 
     public LayerMask groundMask;
     Vector3 velocity;
-    public bool isWalking = false;
-    public bool isSprinting = false; 
+    private bool isWalking = false;
+    private bool isSprinting = false; 
     public GameObject staminaBar; 
     public GameObject healthBar;
     public GameObject levelText;
@@ -42,13 +42,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ElementSounds elementGenerator;
     [SerializeField] float footStepTimer;
     public AudioSource ouchSound;
+    public AudioSource levelUpSound;
 
 
     void Awake()
     {
         currentElement = "None";
         elementWeakness = "None";
-        elementResistence = "None";
+        elementResistance = "None";
     }
 
     void Update()
@@ -152,14 +153,14 @@ public class PlayerController : MonoBehaviour
             {
                 currentElement = "Fire";
                 elementWeakness = "Water";
-                elementResistence = "Wind";
+                elementResistance = "Wind";
                 playElementSound(0);
             }
             else
             {
                 currentElement = "None";
                 elementWeakness = "None";
-                elementResistence = "None";
+                elementResistance = "None";
             }
         }
         else if(Input.GetButtonDown("WaterSwitch") && waterStone == true)
@@ -168,14 +169,14 @@ public class PlayerController : MonoBehaviour
             {
                 currentElement = "Water";
                 elementWeakness = "Wind";
-                elementResistence = "Fire";
+                elementResistance = "Fire";
                 playElementSound(1);
             }
             else
             {
                 currentElement = "None";
                 elementWeakness = "None";
-                elementResistence = "None";
+                elementResistance = "None";
             }
         }
         else if(Input.GetButtonDown("WindSwitch") && windStone == true)
@@ -184,14 +185,14 @@ public class PlayerController : MonoBehaviour
             {
                 currentElement = "Wind";
                 elementWeakness = "Fire";
-                elementResistence = "Water";
+                elementResistance = "Water";
                 playElementSound(2);
             }
             else
             {
                 currentElement = "None";
                 elementWeakness = "None";
-                elementResistence = "None";
+                elementResistance = "None";
             }
         }
         sword.GetComponent<SwordAttack>().changeElement(currentElement);
@@ -219,7 +220,7 @@ public class PlayerController : MonoBehaviour
         {
             currentElement = "None";
             elementWeakness = "None";
-            elementResistence = "None";
+            elementResistance = "None";
         }
     }
 
@@ -232,7 +233,7 @@ public class PlayerController : MonoBehaviour
             {
                 currentHealth -= (damageValue * 2);
             }
-            else if(element == elementResistence && currentElement != "None")
+            else if(element == elementResistance && currentElement != "None")
             {
                 currentHealth -= (damageValue /2);
             }
@@ -241,7 +242,7 @@ public class PlayerController : MonoBehaviour
                 currentHealth -= damageValue;
             }
         
-            if(currentHealth < 0)
+            if(currentHealth <= 0)
             {
                 currentHealth = 0;
                 FindObjectOfType<GameManager>().gameOver();
@@ -249,8 +250,20 @@ public class PlayerController : MonoBehaviour
             healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
             invincibility += 120f;
             ouchSound.Play();
-            
         }
+    }
+
+    //recovers player health while also keeping it from going over the maxHealth value
+    public void gainHealth(int healthValue)
+    {
+        currentHealth += healthValue;
+
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        } 
+
+        healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);    
     }
 
     //Grants the player XP and calls to check for a level increase.
@@ -285,10 +298,53 @@ public class PlayerController : MonoBehaviour
 
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
         healthBar.GetComponent<PlayerHealthManager>().levelUpHealth(maxHealth);
-        expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
-        sendStats();
+        
+        if(level == 20)
+        {
+            expText.GetComponent<TextMeshProUGUI>().text = "MAX LVL";
+        }
+        else
+        {
+            expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+        }
+        levelUpSound.Play();
+    }
+
+    //Sends current stats to the GameManager
+    public void sendStats()
+    {
+        int fireStoneInt;
+        int waterStoneInt;
+        int windStoneInt;
+
+        if(fireStone == false)
+        {
+            fireStoneInt = 0;
+        }
+        else
+        {
+            fireStoneInt = 1;
+        }
+        if(waterStone == false)
+        {
+            waterStoneInt = 0;
+        }
+        else
+        {
+            waterStoneInt = 1;
+        }
+        if(windStone == false)
+        {
+            windStoneInt = 0;
+        }
+        else
+        {
+            windStoneInt = 1;
+        }
+
+        FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal, fireStoneInt, waterStoneInt, windStoneInt);
     }
 
     //gets the values of each stat from the database and applies them to the corresponding player stats.
@@ -327,45 +383,20 @@ public class PlayerController : MonoBehaviour
         }
 
         sword.GetComponent<SwordAttack>().updateAttackStr(attackStrength);
-        healthBar.GetComponent<PlayerHealthManager>().newSceneHealth(maxHealth, currentHealth);
-        expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
+        healthBar.GetComponent<PlayerHealthManager>().setHealthBar(currentHealth);
         levelText.GetComponent<TextMeshProUGUI>().text = "LV: " + level;
         atkText.GetComponent<TextMeshProUGUI>().text = "ATK: " + attackStrength;
-    }
 
-    //Sends current stats to the database
-    public void sendStats()
-    {
-        int fireStoneInt;
-        int waterStoneInt;
-        int windStoneInt;
-
-        if(fireStone == false)
+        if(level == 20)
         {
-            fireStoneInt = 0;
+            expText.GetComponent<TextMeshProUGUI>().text = "MAX LVL";
         }
         else
         {
-            fireStoneInt = 1;
-        }
-        if(waterStone == false)
-        {
-            waterStoneInt = 0;
-        }
-        else
-        {
-            waterStoneInt = 1;
-        }
-        if(windStone == false)
-        {
-            windStoneInt = 0;
-        }
-        else
-        {
-            windStoneInt = 1;
+            expText.GetComponent<TextMeshProUGUI>().text = "" + xp + " / " +  xpGoal + "XP";
         }
 
-        FindObjectOfType<GameManager>().updateDatabase(maxHealth, currentHealth, attackStrength, level, xp, xpGoal, fireStoneInt, waterStoneInt, windStoneInt);
+        Debug.Log("Stats Recieved");
     }
 
     //The name of the gem collected is passed into the collectGem function and either sets the corresponding element to true or grants 500 xp.
@@ -422,7 +453,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayFootstep()
+    private void PlayFootstep()
     {
         StartCoroutine("PlayStep", footStepTimer);
     }
@@ -440,7 +471,7 @@ public class PlayerController : MonoBehaviour
         isWalking = false;
     }
 
-    void playElementSound(int entryNumber)
+    private void playElementSound(int entryNumber)
     {
         elementGenerator.audioSource.clip = elementGenerator.elementSoundsList[entryNumber];
 

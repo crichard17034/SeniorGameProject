@@ -43,14 +43,6 @@ public class PlayerHealthManager : MonoBehaviour
         }
     }
 
-    //When a new scene is loaded, the current stats from the previous scene are brought over.
-    public void newSceneHealth(int newMaxHealth, int newCurrentHealth)
-    {
-        maxHealth = newMaxHealth;
-        currentHealth = newCurrentHealth;
-        setHealthBar(currentHealth);
-    }
-
     //When leveling up, the HUD is updated to reflect the changes in stats.
     public void levelUpHealth(int newMaxHealth)
     {

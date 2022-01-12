@@ -116,6 +116,7 @@ public class EnemyController : MonoBehaviour
         gameObject.GetComponent<DamagePlayer>().setElementDamage(element);
     }
 
+    //loses health after taking damage
     public void loseHealth(string atkElement, int damageValue)
     {
         if(atkElement == elementWeakness && element != "None")
@@ -153,6 +154,7 @@ public class EnemyController : MonoBehaviour
     public void die()
     {
         FindObjectOfType<PlayerController>().gainXP(xp);
+        FindObjectOfType<PlayerController>().gainHealth(5);
         Destroy(gameObject);
     }
 
