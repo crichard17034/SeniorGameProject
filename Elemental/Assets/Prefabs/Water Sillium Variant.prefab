@@ -40,12 +40,12 @@ PrefabInstance:
     - target: {fileID: 7087511345854900312, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: damageValue
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: xp
-      value: 35
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
@@ -55,12 +55,22 @@ PrefabInstance:
     - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: maxHealth
-      value: 120
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
+        type: 3}
+      propertyPath: attackRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
+        type: 3}
+      propertyPath: attackTimer
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: currentHealth
-      value: 120
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7087511345854900314, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}

@@ -633,15 +633,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bf22bc7e87ab64e9bdd77b19cdcfe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 75
-  maxHealth: 75
+  currentHealth: 90
+  maxHealth: 90
   xp: 20
   element: None
   elementWeakness: None
   elementResistence: None
   lookRadius: 40
   attackRange: 10
-  attackTimer: 120
+  attackTimer: 210
   enemyHealthBar: {fileID: 8304539771949736477}
   soundGenerator: {fileID: 689438334247134662}
 --- !u!114 &7087511345854900312
@@ -692,13 +692,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.16
+  m_Volume: 0.33
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 20
+  Priority: 68
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

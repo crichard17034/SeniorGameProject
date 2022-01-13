@@ -52,7 +52,7 @@ public class SwordAttack : MonoBehaviour
     //checks if the game object that collided with the sword is an enemy or barrier
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy" && attacking == true)
+        if(other.tag == "Enemy")
         {
             other.gameObject.GetComponent<EnemyController>().loseHealth(currentElement, damageValue);
         }
