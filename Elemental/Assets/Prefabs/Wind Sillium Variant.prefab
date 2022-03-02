@@ -25,12 +25,12 @@ PrefabInstance:
     - target: {fileID: 5916521020401684177, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: m_Value
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 5916521020401684177, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
       propertyPath: m_MaxValue
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 5916521020401684177, guid: 14e9ce7ab5f89d14290132a86e420ef3,
         type: 3}
